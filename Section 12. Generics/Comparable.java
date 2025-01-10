@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Comparable {
     public static void main(String[] args) {
         Integer five = 5;
@@ -15,5 +17,31 @@ public class Comparable {
             int val = banana.compareTo(c);
             System.out.println("compareTo = " +val +" : "+ banana + " " + (val == 0 ? "==" : (val < 0) ? "<" : ">") + " " + c);
         }
+
+        Student tim = new Student("Tim");
+        Student[] students = {new Student("Tim"), new Student("Alice"), new Student("Bob")} ;
+        Arrays.sort(students);
+        System.out.println(Arrays.toString(students));
+
+        System.out.println("result = " + tim.compareTo(new Student("Zoe")));
+
+    }
+}
+
+class Student implements java.lang.Comparable<Student> {
+    private String name;
+
+    public Student(String name){
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
+
+    @Override
+    public int compareTo(Student  o) {
+        return name.compareTo((o.name));
     }
 }
