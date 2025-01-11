@@ -7,10 +7,10 @@ public class Comparator {
         AnotherStudent tim = new AnotherStudent("Tim");
         AnotherStudent[] students = {new AnotherStudent("Tim"), new AnotherStudent("Alice"), new AnotherStudent("Bob")} ;
         Arrays.sort(students);
-        System.out.println(Arrays.toString(students));
+//        System.out.println(Arrays.toString(students));
 
         StudentGPAComparator gpaComparator = new StudentGPAComparator();
-        Arrays.sort(students, gpaComparator);
+        Arrays.sort(students, gpaComparator.reversed());
         System.out.println(Arrays.toString(students));
     }
 }
@@ -19,7 +19,7 @@ class StudentGPAComparator implements java.util.Comparator<AnotherStudent>{
 
     @Override
     public int compare(AnotherStudent o1, AnotherStudent o2) {
-        return (o1.gpa + o1.name).compareTo(o2.gpa + o2.name);
+        return (o1.name).compareTo((o2.name));
     }
 }
 class AnotherStudent implements java.lang.Comparable<AnotherStudent> {
@@ -41,11 +41,7 @@ class AnotherStudent implements java.lang.Comparable<AnotherStudent> {
 
     @Override
     public String toString() {
-        return "Student{" +
-                "name='" + name + '\'' +
-                ", id=" + id +
-                ", gpa=" + gpa +
-                '}';
+        return id + "-" + name + " " + "(" + String.format("%.2f", gpa) + ")";
     }
 
     @Override
