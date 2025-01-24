@@ -1,7 +1,7 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import javax.swing.plaf.basic.BasicBorders;
+import java.util.*;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class Main {
 
@@ -51,5 +51,53 @@ public class Main {
 //                .forEach(s -> System.out.print(s + " "));//terminal operation
         tempStream.forEach(s -> System.out.print(s + " "));
         System.out.println("\n-------------------");
+
+        String[] strings ={"one", "two", "three", "four", "five"};
+        var firstStream = Arrays.stream(strings)
+                .sorted(Comparator.reverseOrder());
+//                .forEach(s -> System.out.print(s + " "));
+        var secondStream = Stream.of("six", "seven", "eight", "nine", "ten")
+                .map(String::toUpperCase);
+//                .forEach(s -> System.out.print(s + " "));
+
+        Stream.concat(secondStream, firstStream)
+                .map(s -> s.charAt(0) + " - " + s)
+                .forEach(s -> System.out.println(s + " "));
+
+        Map<Character, int[]> myMap = new LinkedHashMap<>();
+        int bingoIndex = 1;
+        for (char c : "BINGO".toCharArray()){
+            int[] numbers = new int[15];
+            int labelNo = bingoIndex;
+            Arrays.setAll(numbers, i -> labelNo + i);
+            myMap.put(c, numbers);
+            bingoIndex += 15;
+        }
+
+        //map is not a Collection, so we can't use stream directly on it
+        myMap.entrySet()
+                .stream()
+                .map(e -> e.getKey() + " has range: " + e.getValue()[0] + " - " +
+                        e.getValue()[e.getValue().length-1])
+                .forEach(System.out::println);
+
+        Random random = new Random();
+        Stream.generate(() -> random.nextInt(2))
+                .limit(10)
+                .forEach(s -> System.out.print(s + " "));
+
+        System.out.println();
+        IntStream.iterate(1, n -> n + 1)
+                .filter(Main::isPrime)
+                .limit(20)
+                .forEach(s -> System.out.print(s + " "));
+    }
+
+    public static boolean isPrime(int number){
+        if (number <= 1) return false;
+        for (int i = 2; i <= Math.sqrt(number); i++){
+            if (number % i == 0) return false;
+        }
+        return true;
     }
 }
